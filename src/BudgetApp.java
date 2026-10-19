@@ -39,9 +39,16 @@ public class BudgetApp {
         // Calculate total budget difference
         int difference = budgetDifference(categories);
 
-        System.out.println("Total budget difference: $" + difference);
+        
+System.out.println("Total budget difference: $" + difference);
 
-        scan.close();
+// Wave 5: Calculate average budget difference
+double average = averageBudgetDifference(categories);
+
+System.out.printf("Average budget difference: $%.2f%n", average);
+
+scan.close();
+
     }
 
     /**
@@ -58,4 +65,19 @@ public class BudgetApp {
 
         return (int) Math.round(total);
     }
+    
+public static double averageBudgetDifference(List<BudgetCategory> categories) {
+    if (categories.isEmpty()) {
+        return 0;
+    }
+
+    double total = 0;
+
+    for (BudgetCategory category : categories) {
+        total += category.getSpent() - category.getBudget();
+    }
+
+    return total / categories.size();
+    }
+
 }
