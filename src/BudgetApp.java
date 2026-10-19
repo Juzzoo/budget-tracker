@@ -1,9 +1,11 @@
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class BudgetApp {
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
@@ -25,11 +27,35 @@ public class BudgetApp {
             categories.add(budgetCategory);
         }
 
-        System.out.println(categories);
+        // Sort from most overspent to least overspent
+        Collections.sort(categories, Collections.reverseOrder());
+
+        System.out.println("Categories from most overspent to least:");
+
+        for (BudgetCategory category : categories) {
+            System.out.println(category);
+        }
+
+        // Calculate total budget difference
+        int difference = budgetDifference(categories);
+
+        System.out.println("Total budget difference: $" + difference);
+
+        scan.close();
     }
 
+    /**
+     * Returns the total amount over or under budget.
+     * Negative means under budget.
+     * Positive means over budget.
+     */
     public static int budgetDifference(List<BudgetCategory> categories) {
-        // TODO: Implement in Wave 4
-        return -1;
+        double total = 0;
+
+        for (BudgetCategory category : categories) {
+            total += category.getSpent() - category.getBudget();
+        }
+
+        return (int) Math.round(total);
     }
 }
